@@ -1,0 +1,11 @@
+# Ignore node_modules directory (installed dependencies)
+node_modules/
+
+# Ignore build output directory
+dist/
+
+# Ignore environment variable files containing sensitive data
+.env
+
+# Ignore npm package lock file
+package-lock.json
