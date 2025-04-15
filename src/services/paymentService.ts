@@ -1,4 +1,13 @@
 import { v4 as uuidv4 } from 'uuid';
+import Stripe from 'stripe';
+import dotenv from 'dotenv';
+dotenv.config();
+
+// Use the API version that matches your installed Stripe package
+type StripeApiVersion = '2025-03-31.basil';
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
+  apiVersion: '2025-03-31.basil',
+});
 
 type Payment = {
   id: string;
@@ -8,7 +17,7 @@ type Payment = {
 
 const payments: Payment[] = [];
 
-export class PaymentService {
+class PaymentService {
   async getAllPayments(): Promise<Payment[]> {
     return payments;
   }
@@ -43,3 +52,10 @@ export class PaymentService {
 }
 
 export const paymentService = new PaymentService();
+
+export async function createStripePaymentIntent(amount: number, currency: string = 'usd') {
+  return await stripe.paymentIntents.create({
+    amount,
+    currency,
+  });
+}

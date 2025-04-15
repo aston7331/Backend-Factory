@@ -9,7 +9,7 @@ type User = {
 
 const users: User[] = [];
 
-export class UserService {
+ class UserService {
   async getAllUsers(): Promise<User[]> {
     return users;
   }

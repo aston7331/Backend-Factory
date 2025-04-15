@@ -9,4 +9,7 @@ router.post('/', paymentController.createPayment.bind(paymentController));
 router.put('/:id', paymentController.updatePayment.bind(paymentController));
 router.delete('/:id', paymentController.deletePayment.bind(paymentController));
 
+// Stripe PaymentIntent endpoint
+router.post('/create-payment-intent', paymentController.createStripePaymentIntent.bind(paymentController));
+
 export default router;

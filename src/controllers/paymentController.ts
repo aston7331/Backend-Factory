@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { paymentService } from '../services/paymentService';
+import { paymentService, createStripePaymentIntent } from '../services/paymentService';
 
 class PaymentController {
   async getAllPayments(req: Request, res: Response) {
@@ -28,6 +28,17 @@ class PaymentController {
     const success = await paymentService.deletePayment(req.params.id);
     if (success) res.json({ message: 'Payment deleted' });
     else res.status(404).json({ message: 'Payment not found' });
+  }
+
+  // Stripe PaymentIntent endpoint
+  async createStripePaymentIntent(req: Request, res: Response) {
+    try {
+      const { amount, currency } = req.body;
+      const paymentIntent = await createStripePaymentIntent(amount, currency);
+      res.json({ clientSecret: paymentIntent.client_secret });
+    } catch (error: any) {
+      res.status(500).json({ error: error.message });
+    }
   }
 }
 

@@ -8,7 +8,7 @@ type Notification = {
 
 const notifications: Notification[] = [];
 
-export class NotificationService {
+ class NotificationService {
   async getAllNotifications(): Promise<Notification[]> {
     return notifications;
   }

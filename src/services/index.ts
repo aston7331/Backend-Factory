@@ -1,4 +1,4 @@
 // Central export for all services
-export { userService, UserService } from './userService';
-export { notificationService, NotificationService } from './notificationService';
-export { paymentService, PaymentService } from './paymentService';
+export { userService } from './userService';
+export { notificationService } from './notificationService';
+export { paymentService } from './paymentService';
