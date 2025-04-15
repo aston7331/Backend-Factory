@@ -1,13 +1,14 @@
+// src/index.ts
+import * as dotenv from 'dotenv';
+dotenv.config();
+
 import express, { Request, Response } from 'express';
-import dotenv from 'dotenv';
+import 'reflect-metadata';
 import cors from 'cors';
 import morgan from 'morgan';
 import bodyParser from 'body-parser';
 import routes from './routes';
 import { connectAllDatabases } from './config';
-
-// Load environment variables from .env file
-dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;

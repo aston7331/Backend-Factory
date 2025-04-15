@@ -1,7 +1,7 @@
 import { Table, Column, Model, DataType } from 'sequelize-typescript';
 
-@Table({ tableName: 'users', timestamps: false })
-export default class User extends Model<User> {
+@Table({ tableName: 'notifications', timestamps: false })
+export default class Notification extends Model<Notification> {
   @Column({
     type: DataType.STRING,
     primaryKey: true,
@@ -13,12 +13,12 @@ export default class User extends Model<User> {
     type: DataType.STRING,
     allowNull: false
   })
-  name!: string;
+  message!: string;
 
   @Column({
-    type: DataType.STRING,
+    type: DataType.BOOLEAN,
     allowNull: false,
-    unique: true
+    defaultValue: false
   })
-  email!: string;
+  read!: boolean;
 }

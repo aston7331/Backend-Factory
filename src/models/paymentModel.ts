@@ -1,7 +1,7 @@
 import { Table, Column, Model, DataType } from 'sequelize-typescript';
 
-@Table({ tableName: 'users', timestamps: false })
-export default class User extends Model<User> {
+@Table({ tableName: 'payments', timestamps: false })
+export default class Payment extends Model<Payment> {
   @Column({
     type: DataType.STRING,
     primaryKey: true,
@@ -10,15 +10,14 @@ export default class User extends Model<User> {
   id!: string;
 
   @Column({
-    type: DataType.STRING,
+    type: DataType.FLOAT,
     allowNull: false
   })
-  name!: string;
+  amount!: number;
 
   @Column({
     type: DataType.STRING,
-    allowNull: false,
-    unique: true
+    allowNull: false
   })
-  email!: string;
+  status!: string;
 }

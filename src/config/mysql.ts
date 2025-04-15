@@ -1,27 +1,24 @@
-import mysql from 'mysql2/promise';
+import { Sequelize } from 'sequelize-typescript';
+import User from '../models/userModel';
+import Notification from '../models/notificationModel';
+import Payment from '../models/paymentModel';
 
-export const connectMySQL = async () => {
-  const MYSQL_HOST = process.env.MYSQL_HOST || '';
-  const MYSQL_PORT = Number(process.env.MYSQL_PORT) || 3306;
-  const MYSQL_USER = process.env.MYSQL_USER || '';
-  const MYSQL_PASSWORD = process.env.MYSQL_PASSWORD || '';
-  const MYSQL_DATABASE = process.env.MYSQL_DATABASE || '';
-  if (!MYSQL_HOST || !MYSQL_USER || !MYSQL_DATABASE) {
-    console.warn('MySQL credentials not set in environment. Skipping MySQL connection.');
-    return;
-  }
+// MySQL connection using sequelize-typescript
+export const sequelizeMySQL = new Sequelize({
+  dialect: 'mysql',
+  host: process.env.MYSQL_HOST,
+  port: Number(process.env.MYSQL_PORT) || 3306,
+  username: process.env.MYSQL_USER,
+  password: process.env.MYSQL_PASSWORD,
+  database: process.env.MYSQL_DATABASE,
+  models: [User, Notification, Payment],
+});
+
+export const syncMySQLDb = async () => {
   try {
-    const connection = await mysql.createConnection({
-      host: MYSQL_HOST,
-      port: MYSQL_PORT,
-      user: MYSQL_USER,
-      password: MYSQL_PASSWORD,
-      database: MYSQL_DATABASE,
-    });
-    console.log('MySQL connected');
-    return connection;
+    await sequelizeMySQL.sync();
+    console.log('MySQL Database & tables synced!');
   } catch (error) {
-    console.error('MySQL connection error:', error);
-    process.exit(1);
+    console.error('MySQL DB sync error:', error);
   }
 };

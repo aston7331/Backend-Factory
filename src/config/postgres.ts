@@ -1,19 +1,23 @@
-// PostgreSQL connection temporarily disabled by user request.
-// import { Client as PgClient } from 'pg';
+// PostgreSQL connection using sequelize-typescript.
+import { Sequelize } from 'sequelize-typescript';
+// import your Postgres models here, e.g.:
+// import SomeModel from '../models/someModel';
 
-// export const connectPostgres = async () => {
-//   const PG_URI = process.env.PG_URI || '';
-//   if (!PG_URI) {
-//     console.warn('PG_URI not set in environment. Skipping PostgreSQL connection.');
-//     return;
-//   }
-//   const client = new PgClient({ connectionString: PG_URI });
-//   try {
-//     await client.connect();
-//     console.log('PostgreSQL connected');
-//     return client;
-//   } catch (error) {
-//     console.error('PostgreSQL connection error:', error);
-//     process.exit(1);
-//   }
-// };
+export const sequelizePostgres = new Sequelize({
+  dialect: 'postgres',
+  host: process.env.PG_HOST,
+  port: Number(process.env.PG_PORT) || 5432,
+  username: process.env.PG_USER,
+  password: process.env.PG_PASSWORD,
+  database: process.env.PG_DATABASE,
+  // models: [SomeModel], // Add your Postgres models here
+});
+
+export const syncPostgresDb = async () => {
+  try {
+    await sequelizePostgres.sync();
+    console.log('PostgreSQL Database & tables synced!');
+  } catch (error) {
+    console.error('PostgreSQL DB sync error:', error);
+  }
+};
