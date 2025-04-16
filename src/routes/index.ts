@@ -2,7 +2,7 @@ import { Router } from 'express';
 import { checkAllDbHealth } from '../utils/dbHealth';
 import userRoutes from './userRoutes';
 import notificationRoutes from './notificationRoutes';
-import paymentRoutes from './paymentRoutes';
+import stripeRoutes from './stripeRoutes';
 
 const router = Router();
 
@@ -14,6 +14,6 @@ router.get('/db-health', async (req, res) => {
 
 router.use('/users', userRoutes);
 router.use('/notifications', notificationRoutes);
-router.use('/payments', paymentRoutes);
+router.use('/stripe', stripeRoutes);
 
 export default router;

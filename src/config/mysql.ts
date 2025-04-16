@@ -1,7 +1,6 @@
 import { Sequelize } from 'sequelize-typescript';
 import User from '../models/userModel';
 import Notification from '../models/notificationModel';
-import Payment from '../models/paymentModel';
 
 // MySQL connection using sequelize-typescript
 export const sequelizeMySQL = new Sequelize({
@@ -11,7 +10,7 @@ export const sequelizeMySQL = new Sequelize({
   username: process.env.MYSQL_USER,
   password: process.env.MYSQL_PASSWORD,
   database: process.env.MYSQL_DATABASE,
-  models: [User, Notification, Payment],
+  models: [User, Notification],
 });
 
 export const syncMySQLDb = async () => {
