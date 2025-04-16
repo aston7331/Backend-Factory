@@ -1,34 +1,26 @@
 // src/index.ts
 import * as dotenv from 'dotenv';
 dotenv.config();
-
-import express, { Request, Response } from 'express';
-import 'reflect-metadata';
+import express from 'express';
 import cors from 'cors';
-import morgan from 'morgan';
 import bodyParser from 'body-parser';
 import routes from './routes';
-import { connectAllDatabases } from './config';
+import { errorHandler } from './utils/errorHandler';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Connect to all configured databases
-connectAllDatabases();
 
 // Middleware
 app.use(cors());
-app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // Modular routes
 app.use('/api', routes);
 
-// Basic route
-app.get('/', (req: Request, res: Response) => {
-  res.send('Backend Factory API running!');
-});
+// Error handler middleware (should be after all routes)
+app.use(errorHandler);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
