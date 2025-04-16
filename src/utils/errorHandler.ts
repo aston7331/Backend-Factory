@@ -4,7 +4,8 @@ import ErrorLog, { ErrorLogCreationAttributes } from '../models/errorLogModel';
 // Standard Express error-handling middleware
 export async function errorHandler(err: any, req: Request, res: Response, next: NextFunction) {
   // Set default status code and message
-  const statusCode = err.statusCode || 500;
+  if (err) {
+    const statusCode = err.statusCode || 500;
   const message = err.message || 'Internal Server Error';
 
   // Prepare error log data
@@ -34,4 +35,7 @@ export async function errorHandler(err: any, req: Request, res: Response, next: 
     // Optionally include stack trace in development
     ...(process.env.NODE_ENV === 'development' && { stack: err.stack })
   });
+  } else {
+    next(err);
+  } 
 }
